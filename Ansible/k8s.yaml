@@ -4,9 +4,6 @@
   gather_facts: yes  # Gather facts about the target host
 
   tasks:
-    - name: Delete Deployment
-      command: kubectl delete -f ~/deployment.yaml
-
     - name: Remove file
       command: rm -rf ~/deployment.yaml
       
