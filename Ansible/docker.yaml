@@ -23,6 +23,3 @@
 
     - name: Push image
       command: docker push devsecopswithansible.azurecr.io/petstore:latest
-
-    - name: Run container
-      command: docker run -d --name pet -p 8081:8080 devsecopswithansible.azurecr.io/petstore:latest
