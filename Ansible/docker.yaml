@@ -15,7 +15,7 @@
     - name: tag image
       command: docker tag image:latest devsecopswithansible.azurecr.io/petstore:latest 
 
-    - name: Log in to Docker Hub
+    - name: Log in to Docker Registry
       community.docker.docker_login:
         registry_url: devsecopswithansible.azurecr.io
         username: devsecopswithansible
