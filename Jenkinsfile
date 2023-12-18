@@ -35,7 +35,7 @@ pipeline {
                         -Dsonar.host.url=http://172.201.249.253:9000 \
                         -Dsonar.token=token_sonar \
                         -Dsonar.sources=src \
-                        -Dsonar.java.binaries= ."    
+                        -Dsonar.java.binaries=."    
                     }
                 }       
             }
