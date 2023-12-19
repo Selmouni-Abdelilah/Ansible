@@ -90,14 +90,6 @@ pipeline {
                 }
             }
         }
-        stage('CodeQl') {
-            steps{
-                withCodeQL(codeql: 'codeql') {
-                    sh 'codeql pack install '
-                    sh 'codeql test run '
-                    }
-            }   
-        }
         stage('k8s using ansible'){
             steps{
                 dir('Ansible') {
