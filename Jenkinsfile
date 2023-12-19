@@ -67,6 +67,35 @@ pipeline {
                    }    
               }
         }
+        stage("Docker image scanning with Trivy"){
+            steps {
+                script{
+                // Install trivy
+                sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s  v0.44.1'
+                sh 'chmod +x ./bin/trivy'
+                sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl'
+                def dockerImageName = "devsecopswithansible.azurecr.io/petstore:latest"
+                // Scan all vuln levels
+                sh "./bin/trivy image --ignore-unfixed --scanners vuln --vuln-type os,library --format template --template @html.tpl -o trivy-scan.html ${dockerImageName}"      
+                    publishHTML target : [
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: '.',
+                        reportFiles: 'trivy-scan.html',
+                        reportName: 'Trivy Scan',
+                        reportTitles: 'Trivy Scan'
+                    ]
+        
+                }
+            }
+        }
+        stage('CodeQl') {
+         withCodeQL(codeql: 'codeql') {
+            sh 'codeql pack install test/'
+            sh 'codeql test run test/'
+            }
+        }
         stage('k8s using ansible'){
             steps{
                 dir('Ansible') {
