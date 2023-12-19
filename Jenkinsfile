@@ -93,8 +93,8 @@ pipeline {
         stage('CodeQl') {
             steps{
                 withCodeQL(codeql: 'codeql') {
-                    sh 'codeql pack install test/'
-                    sh 'codeql test run test/'
+                    sh 'codeql pack install '
+                    sh 'codeql test run '
                     }
             }   
         }
